@@ -1,5 +1,18 @@
 var gl;
 
+function loadShader(url, callback){
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if(xhr.readyState == XMLHttpRequest.DONE) {
+            var response = xhr.responseText;
+            callback(response);
+        }
+    };
+    xhr.open("GET", url, true);
+    xhr.responseType = "text";
+    xhr.send();
+}
+
 function initGL(canvas) {
     try {
         gl = canvas.getContext("experimental-webgl");
