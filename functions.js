@@ -77,7 +77,6 @@ function degToRad(degrees) {
 }
 
 
-//TODO consider listing scenes prop, including duration here.
 var currentScene = 0;
 var scenes = [
   {
@@ -89,9 +88,19 @@ var scenes = [
 ];
 
 function collectSecenes(){
+  scenes.map(function(elem){
+    var o = eval(elem.sceneName);
+    if(o){
+      elem.sceneObj = o;
+      o.init(function(){elem.state = "ready"});
+      o.state="loaded";
+    } 
+  });
+  
+  if(scenes.filter(function(elem){elem.state == "notLoaded"}).length != 0){
+    setTimeout(collectSecenes, 100);
+  }
 
-  //scenes.push(scene1);
-  scene1.init();
 } 
   
 var lastTime = 0;
@@ -100,7 +109,7 @@ function animate() {
   var timeNow = new Date().getTime();
   if (lastTime != 0) {
     var elapsed = timeNow - lastTime;
-    scenes[currentScene].animate(elapsed);
+    scenes[currentScene].sceneObj.animate(elapsed);
   }
   lastTime = timeNow;
 }
@@ -108,7 +117,7 @@ function animate() {
 
 function tick() {
   requestAnimFrame(tick);
-  scenes[currentScene].drawScene();
+  scenes[currentScene].sceneObj.drawScene();
   animate();
 }
 

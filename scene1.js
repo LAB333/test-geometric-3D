@@ -5,7 +5,7 @@ var scene1 = (function (){
   var fs= null;
   var shaderProgram = null;
 
-  function init(){
+  function init(callback){
 
     var init2 = function(){
       shaderProgram  = initShaders(vs,fs);
@@ -13,6 +13,7 @@ var scene1 = (function (){
       console.log(shaderProgram);
       initAttributesAndUniforms(shaderProgram, ["VertexPosition","VertexColor"], ["PMatrix","MVMatrix"]);
       initBuffers();
+      callback();
     }
 
     //load requiered stuff
