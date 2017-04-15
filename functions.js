@@ -16,6 +16,9 @@ function loader(){
   var overlay = document.createElement('div');
   overlay.id = 'overlay';
   document.querySelector('body').appendChild(overlay);
+  if(true === false){
+    tick();
+  }
 }
 
 loader();
