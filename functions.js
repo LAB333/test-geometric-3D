@@ -133,8 +133,10 @@ function tick() {
 
 
 function webGLStart() {
+
     collectSecenes();
-    var canvas = document.getElementById("main");
+    var canvas = document.querySelector('canvas');
+
     initGL(canvas);
     initShaders()
     scenes[currentScene].initBuffers();
