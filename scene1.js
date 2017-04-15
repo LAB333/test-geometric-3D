@@ -7,21 +7,23 @@ var scene1 = (function (){
 
   function init(){
 
+    var init2 = function(shaderProgram){
+      shaderProgram  = initShaders(vs,fs);
+      useProgram(shaderProgram);
+      console.log(shaderProgram);
+      initAttributesAndUniforms(shaderProgram, ["VertexPosition","VertexColor"], ["PMatrix","MVMatrix"]);
+      initBuffers();
+    }
+
     //load requiered stuff
     loadShader("scene1.vs", function(shader){   vs = shader ; 
                                                 if(vs && fs){ 
-                                                  shaderProgram  = initShaders(vs,fs);
-                                                  console.log(shaderProgram);
-                                                  useProgram(shaderProgram);
-                                                  initBuffers();
+                                                  init2();
                                               }
                                             });
     loadShader("scene1.fs", function(shader){   fs = shader ; 
                                                 if(vs && fs){ 
-                                                  shaderProgram  = initShaders(vs,fs);
-                                                  useProgram(shaderProgram);
-                                                  console.log(shaderProgram);
-                                                  initBuffers();
+                                                  init2();
                                               }
                                             });
 
