@@ -77,13 +77,23 @@ function degToRad(degrees) {
 }
 
 
-var scenes = [];
+//TODO consider listing scenes prop, including duration here.
 var currentScene = 0;
+var scenes = [
+  {
+    duration : 10000,
+    state : "notLoaded",
+    sceneName : "scene1",
+    sceneObj : null
+  }
+];
+
 function collectSecenes(){
-  scenes.push(scene1);
+
+  //scenes.push(scene1);
   scene1.init();
 } 
-
+  
 var lastTime = 0;
 
 function animate() {
