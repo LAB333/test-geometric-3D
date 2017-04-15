@@ -9,7 +9,6 @@ var scene1 = (function (){
 
     var init2 = function(){
       shaderProgram  = initShaders(vs,fs);
-      useProgram(shaderProgram);
       console.log(shaderProgram);
       initAttributesAndUniforms(shaderProgram, ["VertexPosition","VertexColor"], ["PMatrix","MVMatrix"]);
       initBuffers();
@@ -250,12 +249,17 @@ var scene1 = (function (){
     rCube -= (75 * elapsed) / 1000.0;
   }
 
+  function start(){
+      useProgram(shaderProgram);
+  }
+
 
   return {
     init,
     initBuffers,
     drawScene,
-    animate
+    animate,
+    start
   }
 
 })();

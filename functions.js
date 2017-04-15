@@ -133,6 +133,10 @@ function tick() {
   animate();
 }
 
+function start(){
+  //TODO stuff to manage time here ! 
+  tick();
+}
 
 
 function webGLStart() {
