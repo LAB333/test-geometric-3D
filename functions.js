@@ -82,6 +82,7 @@ var scenes = [];
 var currentScene = 0;
 function collectSecenes(){
   scenes.push(scene1);
+  scene1.init();
 }
 
 var lastTime = 0;

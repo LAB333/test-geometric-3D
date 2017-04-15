@@ -1,6 +1,18 @@
 var scene1 = (function (){
   console.log("scene 1 loaded");
 
+  var vs= null;
+  var fs= null;
+  var shaderProgram = null;
+
+  function init(){
+
+    //load requiered stuff
+    loadShader("scene1.vs", function(shader){ console.log( vs = shader) ; if(vs && fs){ console.log( "ready to init"); shaderProgram  = initShaders(vs,fs)}});
+    loadShader("scene1.fs", function(shader){ console.log( fs = shader) ; if(vs && fs){ console.log( "ready to init"); shaderProgram  = initShaders(vs,fs)}});
+
+  }
+
 
   var pyramidVertexPositionBuffer;
   var pyramidVertexColorBuffer;
@@ -216,6 +228,7 @@ var scene1 = (function (){
 
 
   return {
+    init,
     initBuffers,
     drawScene,
     animate
