@@ -18,7 +18,7 @@ function loader(){
   document.querySelector('body').appendChild(overlay);
   var checkLoadState = setInterval(loadingState,100);
   function loadingState(){
-    var LS = getLoadingState;
+    var LS = getLoadingState();
     console.log(LS);
     if(LS <= 1){
       clearInterval(checkLoadState);
