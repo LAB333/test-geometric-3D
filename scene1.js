@@ -7,9 +7,25 @@ var scene1 = (function (){
 
   function init(){
 
+    var init2 = function(shaderProgram){
+      shaderProgram  = initShaders(vs,fs);
+      useProgram(shaderProgram);
+      console.log(shaderProgram);
+      initAttributesAndUniforms(shaderProgram, ["VertexPosition","VertexColor"], ["PMatrix","MVMatrix"]);
+      initBuffers();
+    }
+
     //load requiered stuff
-    loadShader("scene1.vs", function(shader){ console.log( vs = shader) ; if(vs && fs){ console.log( "ready to init"); shaderProgram  = initShaders(vs,fs)}});
-    loadShader("scene1.fs", function(shader){ console.log( fs = shader) ; if(vs && fs){ console.log( "ready to init"); shaderProgram  = initShaders(vs,fs)}});
+    loadShader("scene1.vs", function(shader){   vs = shader ; 
+                                                if(vs && fs){ 
+                                                  init2();
+                                              }
+                                            });
+    loadShader("scene1.fs", function(shader){   fs = shader ; 
+                                                if(vs && fs){ 
+                                                  init2();
+                                              }
+                                            });
 
   }
 
@@ -177,6 +193,10 @@ var scene1 = (function (){
   var rCube = 0;
 
   function drawScene() {
+
+    if(!shaderProgram) return; //do not do anything yet. Program is not loaded !
+
+
     gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
     gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 

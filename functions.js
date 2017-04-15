@@ -82,7 +82,7 @@ var currentScene = 0;
 function collectSecenes(){
   scenes.push(scene1);
   scene1.init();
-}
+} 
 
 var lastTime = 0;
 
@@ -105,11 +105,10 @@ function tick() {
 
 
 function webGLStart() {
-  collectSecenes();
+  
   var canvas = document.querySelector('canvas');
-
   initGL(canvas);
-  scenes[currentScene].initBuffers(); //TODO this should be called once per scene
+  collectSecenes();
 
   gl.clearColor(0.0, 0.0, 0.0, 1.0);
   gl.enable(gl.DEPTH_TEST);
