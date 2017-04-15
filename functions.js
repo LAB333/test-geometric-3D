@@ -97,7 +97,6 @@ function initAttributesAndUniforms(attributesNames, uniformsNames){
 
 
 
-
 function setMatrixUniforms(pMatrix, mvMatrix) {
     gl.uniformMatrix4fv(shaderProgram.pMatrixUniform, false, pMatrix);
     gl.uniformMatrix4fv(shaderProgram.mvMatrixUniform, false, mvMatrix);
@@ -113,6 +112,7 @@ var scenes = [];
 var currentScene = 0;
 function collectSecenes(){
   scenes.push(scene1);
+  scene1.init();
 }
 
 var lastTime = 0;
