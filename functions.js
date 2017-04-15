@@ -52,19 +52,18 @@ function initShaders(vertexSource, fragmentSource){
   return shaderProgram;
 }
 
-function useProgram( shaderProgram ){
+function useProgram(shaderProgram){
   gl.useProgram(shaderProgram);
 }
 
-function initAttributesAndUniforms(attributesNames, uniformsNames){
-  shaderProgram.vertexPositionAttribute = gl.getAttribLocation(shaderProgram, "aVertexPosition");
-  gl.enableVertexAttribArray(shaderProgram.vertexPositionAttribute);
-
-  shaderProgram.vertexColorAttribute = gl.getAttribLocation(shaderProgram, "aVertexColor");
-  gl.enableVertexAttribArray(shaderProgram.vertexColorAttribute);
-
-  shaderProgram.pMatrixUniform = gl.getUniformLocation(shaderProgram, "uPMatrix");
-  shaderProgram.mvMatrixUniform = gl.getUniformLocation(shaderProgram, "uMVMatrix");
+function initAttributesAndUniforms(shaderProgram, attributesNames, uniformsNames){
+  for(i = 0, k = attributesNames.length ; i < k ; i++){
+    shaderProgram[attributesNames[i]+'Attribute'] = gl.getAttribLocation(shaderProgram, "a"+attributesNames[i]);
+    gl.enableVertexAttribArray(shaderProgram[attributesNames[i]+'Attribute']);
+  }
+  for(i = 0, k = uniformsNames.length ; i < k ; i++){
+    shaderProgram[uniformsNames[i]+'Uniform'] = gl.getUniformLocation(shaderProgram, "u"+uniformsNames[i]);
+  }
 }
 
 function setMatrixUniforms(pMatrix, mvMatrix) {
