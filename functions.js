@@ -12,6 +12,14 @@ function initGL(canvas) {
   }
 }
 
+function loader(){
+  var overlay = document.createElement('div');
+  overlay.id = 'overlay';
+  document.querySelector('body').appendChild(overlay);
+}
+
+loader();
+
 function loadShader(url, callback){
   var xhr = new XMLHttpRequest();
   xhr.onreadystatechange = function() {
