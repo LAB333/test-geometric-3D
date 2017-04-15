@@ -64,7 +64,7 @@ function getShader(gl, id) {
 
 var shaderProgram;
 
-function initShaders() {
+function initShaders(vertexSource, fragmentSource){
   var fragmentShader = getShader(gl, "shader-fs");
   var vertexShader = getShader(gl, "shader-vs");
 
