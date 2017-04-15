@@ -318,7 +318,7 @@ function tick() {
 
 
 function webGLStart() {
-    var canvas = document.getElementById("main");
+    var canvas = document.querySelector('canvas');
     initGL(canvas);
     initShaders()
     initBuffers();
