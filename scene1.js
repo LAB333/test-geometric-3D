@@ -8,6 +8,23 @@ var scene1 = (function (){
   var cubeVertexColorBuffer;
   var cubeVertexIndexBuffer;
 
+  var mvMatrix = mat4.create();
+  var mvMatrixStack = [];
+  var pMatrix = mat4.create();
+
+  function mvPushMatrix() {
+      var copy = mat4.create();
+      mat4.set(mvMatrix, copy);
+      mvMatrixStack.push(copy);
+  }
+
+  function mvPopMatrix() {
+      if (mvMatrixStack.length == 0) {
+          throw "Invalid popMatrix!";
+      }
+      mvMatrix = mvMatrixStack.pop();
+  }
+
   function initBuffers() {
     pyramidVertexPositionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, pyramidVertexPositionBuffer);
@@ -166,7 +183,7 @@ var scene1 = (function (){
     gl.bindBuffer(gl.ARRAY_BUFFER, pyramidVertexColorBuffer);
     gl.vertexAttribPointer(shaderProgram.vertexColorAttribute, pyramidVertexColorBuffer.itemSize, gl.FLOAT, false, 0, 0);
 
-    setMatrixUniforms();
+    setMatrixUniforms(pMatrix, mvMatrix);
     gl.drawArrays(gl.TRIANGLES, 0, pyramidVertexPositionBuffer.numItems);
 
     mvPopMatrix();
@@ -184,7 +201,7 @@ var scene1 = (function (){
     gl.vertexAttribPointer(shaderProgram.vertexColorAttribute, cubeVertexColorBuffer.itemSize, gl.FLOAT, false, 0, 0);
 
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cubeVertexIndexBuffer);
-    setMatrixUniforms();
+    setMatrixUniforms(pMatrix, mvMatrix);
     gl.drawElements(gl.TRIANGLES, cubeVertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
 
     mvPopMatrix();
