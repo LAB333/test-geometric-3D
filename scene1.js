@@ -1,6 +1,15 @@
 var scene1 = (function (){
   console.log("scene 1 loaded");
 
+  var vs= null;
+  var fs= null;
+  var shaderProgram = null;
+
+  //load requiered stuff
+  loadShader("scene1.vs", function(shader){  vs = shader; if(vs && fs) shaderProgram  = initShaders(vs,fs)});
+  loadShader("scene1.fs", function(shader){  fs = shader; if(vs && fs) shaderProgram  = initShaders(vs,fs)});
+
+
 
   var pyramidVertexPositionBuffer;
   var pyramidVertexColorBuffer;
