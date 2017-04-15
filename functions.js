@@ -123,8 +123,8 @@ function webGLStart() {
     var canvas = document.querySelector('canvas');
 
     initGL(canvas);
-    initShaders()
-    scenes[currentScene].initBuffers();
+    initShaders(); //TODO this should be called once per scene
+    scenes[currentScene].initBuffers(); //TODO this should be called once per scene
 
     gl.clearColor(0.0, 0.0, 0.0, 1.0);
     gl.enable(gl.DEPTH_TEST);
