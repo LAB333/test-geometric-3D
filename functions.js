@@ -108,8 +108,12 @@ function collectSecenes(){
   if(scenes.filter(function(elem){elem.state == "notLoaded"}).length != 0){
     setTimeout(collectSecenes, 100);
   }
-
 } 
+
+function getLoadingState(){
+  return scenes.filter(function(elem){elem.state == "ready"}).length / scenes.length;
+}
+
   
 var lastTime = 0;
 
