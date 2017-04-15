@@ -7,7 +7,7 @@ var scene1 = (function (){
 
   function init(){
 
-    var init2 = function(shaderProgram){
+    var init2 = function(){
       shaderProgram  = initShaders(vs,fs);
       useProgram(shaderProgram);
       console.log(shaderProgram);
@@ -194,7 +194,10 @@ var scene1 = (function (){
 
   function drawScene() {
 
-    if(!shaderProgram) return; //do not do anything yet. Program is not loaded !
+    if(!shaderProgram){
+      console.log("not ready yet");
+      return; //do not do anything yet. Program is not loaded !
+    } 
 
 
     gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
@@ -210,12 +213,12 @@ var scene1 = (function (){
     mat4.rotate(mvMatrix, degToRad(rPyramid), [0, 1, 0]);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, pyramidVertexPositionBuffer);
-    gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, pyramidVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
+    gl.vertexAttribPointer(shaderProgram.VertexPositionAttribute, pyramidVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, pyramidVertexColorBuffer);
-    gl.vertexAttribPointer(shaderProgram.vertexColorAttribute, pyramidVertexColorBuffer.itemSize, gl.FLOAT, false, 0, 0);
+    gl.vertexAttribPointer(shaderProgram.VertexColorAttribute, pyramidVertexColorBuffer.itemSize, gl.FLOAT, false, 0, 0);
 
-    setMatrixUniforms(pMatrix, mvMatrix);
+    setMatrixUniforms(shaderProgram, pMatrix, mvMatrix);
     gl.drawArrays(gl.TRIANGLES, 0, pyramidVertexPositionBuffer.numItems);
 
     mvPopMatrix();
@@ -227,13 +230,13 @@ var scene1 = (function (){
     mat4.rotate(mvMatrix, degToRad(rCube), [1, 1, 1]);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, cubeVertexPositionBuffer);
-    gl.vertexAttribPointer(shaderProgram.vertexPositionAttribute, cubeVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
+    gl.vertexAttribPointer(shaderProgram.VertexPositionAttribute, cubeVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, cubeVertexColorBuffer);
-    gl.vertexAttribPointer(shaderProgram.vertexColorAttribute, cubeVertexColorBuffer.itemSize, gl.FLOAT, false, 0, 0);
+    gl.vertexAttribPointer(shaderProgram.VertexColorAttribute, cubeVertexColorBuffer.itemSize, gl.FLOAT, false, 0, 0);
 
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, cubeVertexIndexBuffer);
-    setMatrixUniforms(pMatrix, mvMatrix);
+    setMatrixUniforms(shaderProgram, pMatrix, mvMatrix);
     gl.drawElements(gl.TRIANGLES, cubeVertexIndexBuffer.numItems, gl.UNSIGNED_SHORT, 0);
 
     mvPopMatrix();

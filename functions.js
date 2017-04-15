@@ -66,9 +66,9 @@ function initAttributesAndUniforms(shaderProgram, attributesNames, uniformsNames
   }
 }
 
-function setMatrixUniforms(pMatrix, mvMatrix) {
-  gl.uniformMatrix4fv(shaderProgram.pMatrixUniform, false, pMatrix);
-  gl.uniformMatrix4fv(shaderProgram.mvMatrixUniform, false, mvMatrix);
+function setMatrixUniforms(shaderProgram, pMatrix, mvMatrix) {
+  gl.uniformMatrix4fv(shaderProgram.PMatrixUniform, false, pMatrix);
+  gl.uniformMatrix4fv(shaderProgram.MVMatrixUniform, false, mvMatrix);
 }
 
 
