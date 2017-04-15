@@ -49,7 +49,7 @@ function initShaders(vertexSource, fragmentSource){
     var info = gl.getShaderInfoLog(fragmentShader);
     throw 'Could not compile WebGL program. \n\n' + info;
   }
- 
+  return shaderProgram;
 }
 
 function useProgram( shaderProgram ){
