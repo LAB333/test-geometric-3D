@@ -138,12 +138,11 @@ body {
 /*////// END RESET /////*/
 
 canvas {
-  display: block; 
+  display: none; 
   width: 100%;
   height: 100%; }
 
 #overlay {
   position: fixed;
-  background-color: magenta;
   height: 100%;
   width: 100%; }

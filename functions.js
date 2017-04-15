@@ -16,8 +16,15 @@ function loader(){
   var overlay = document.createElement('div');
   overlay.id = 'overlay';
   document.querySelector('body').appendChild(overlay);
-  if(true === false){
-    tick();
+  var checkLoadState = setInterval(loadingState,100);
+  function loadingState(){
+    var LS = getLoadingState;
+    console.log(LS);
+    if(LS <= 1){
+      clearInterval(checkLoadState);
+      document.querySelector('canvas').style.display = "block";
+      start();
+    }
   }
 }
 
