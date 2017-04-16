@@ -137,9 +137,11 @@ var startSceneTime = null;
 var currentScene = null;
 
 function startNextScene(){
-  startSceneTime = new Date().getTime();
+  startSceneTime = new Date().getTime();    
   currentScene = currentScene != null ? currentScene + 1 : 0;
   console.log("currentScene", currentScene);
+  console.log(scenes[currentScene]);
+  scenes[currentScene].sceneObj.start();
 }
 
 
@@ -155,13 +157,18 @@ function animate() {
 
 function tick() {
   timeNow = new Date().getTime();
-  requestAnimFrame(tick);
-
+  
   if(lastTime - startSceneTime > scenes[currentScene].duration){
     startNextScene();
   }
+  if(currentScene > scenes.length){
+    //TODO stop gracefully the demo
+  }else{
+    requestAnimFrame(tick);
+    animate();
+  }
   
-  animate();
+  
   lastTime = timeNow;
 }
 

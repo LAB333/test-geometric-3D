@@ -251,7 +251,7 @@ var scene1 = (function (){
   }
 
   function start(){
-      useProgram(shaderProgram);
+    useProgram(shaderProgram);
   }
 
 
