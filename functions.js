@@ -95,12 +95,18 @@ function degToRad(degrees) {
 }
 
 
-var currentScene = 0;
+
 var scenes = [
   {
     duration : 10000,
     state : "notLoaded",
     sceneName : "scene1",
+    sceneObj : null
+  },
+  {
+    duration : 10000,
+    state : "notLoaded",
+    sceneName : "scene2",
     sceneObj : null
   }
 ];
@@ -126,25 +132,42 @@ function getLoadingState(){
 
   
 var lastTime = 0;
+var timeNow = 0;
+var startSceneTime = null;
+var currentScene = null;
+
+function startNextScene(){
+  startSceneTime = new Date().getTime();
+  currentScene = currentScene != null ? currentScene + 1 : 0;
+  console.log("currentScene", currentScene);
+}
+
 
 function animate() {
-  var timeNow = new Date().getTime();
-  if (lastTime != 0) {
-    var elapsed = timeNow - lastTime;
-    scenes[currentScene].sceneObj.animate(elapsed);
-  }
-  lastTime = timeNow;
+    
+  var elapsed = timeNow - lastTime;
+  var elapsedInScene = timeNow - startSceneTime;
+  scenes[currentScene].sceneObj.drawScene();
+  scenes[currentScene].sceneObj.animate(elapsed, elapsedInScene);
+ 
 }
 
 
 function tick() {
+  timeNow = new Date().getTime();
   requestAnimFrame(tick);
-  scenes[currentScene].sceneObj.drawScene();
+
+  if(lastTime - startSceneTime > scenes[currentScene].duration){
+    startNextScene();
+  }
+  
   animate();
+  lastTime = timeNow;
 }
 
 function start(){
-  //TODO stuff to manage time here ! 
+  lastTime = new Date().getTime();
+  startNextScene();
   tick();
 }
 

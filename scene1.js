@@ -10,6 +10,7 @@ var scene1 = (function (){
     var init2 = function(){
       shaderProgram  = initShaders(vs,fs);
       console.log(shaderProgram);
+      useProgram(shaderProgram);
       initAttributesAndUniforms(shaderProgram, ["VertexPosition","VertexColor"], ["PMatrix","MVMatrix"]);
       initBuffers();
       callback();
