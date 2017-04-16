@@ -3,13 +3,21 @@ var gl;
 function initGL(canvas) {
   try {
     gl = canvas.getContext("experimental-webgl");
-    gl.viewportWidth = canvas.width;
-    gl.viewportHeight = canvas.height;
+    computeViewport(gl, canvas);
   } catch (e) {
   }
   if (!gl) {
     alert("Could not initialise WebGL, sorry :-(");
   }
+}
+
+function computeViewport(gl, canvas){
+  canvas.style.width = document.querySelector('body').clientWidth+'px';
+  canvas.width = document.querySelector('body').clientWidth;
+  gl.viewportWidth = document.querySelector('body').clientWidth;
+  canvas.style.height = document.querySelector('body').clientHeight+'px';
+  canvas.height = document.querySelector('body').clientHeight;
+  gl.viewportHeight = document.querySelector('body').clientHeight;
 }
 
 function loader(){
