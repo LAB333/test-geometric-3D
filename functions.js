@@ -126,8 +126,8 @@ function collectSecenes(){
     var o = eval(elem.sceneName);
     if(o){
       elem.sceneObj = o;
-      o.init(function(){elem.state = "ready"});
-      o.state="loaded";
+      elem.state="loading";
+      elem.sceneObj.init(function(){elem.state = "ready"});
     } 
   });
   
@@ -137,9 +137,10 @@ function collectSecenes(){
 } 
 
 function getLoadingState(){
-  return (
-      (scenes.filter(function(elem){return elem.state == "ready"}).length / scenes.length) *0.5
-      + (scenes.filter(function(elem){return elem.state == "loaded"}).length / scenes.length) *0.5;
+  var progress = (scenes.filter(function(elem){return elem.state == "ready"}).length / scenes.length) 
+       + (scenes.filter(function(elem){return elem.state == "loading"}).length / scenes.length) * 0.5;
+       //console.log("progress",progress);
+  return  progress;
 }
 
   
