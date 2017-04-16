@@ -57,6 +57,13 @@ var scene1 = (function (){
     
     worldVertexPositionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, worldVertexPositionBuffer);
+    path = [];
+    for(var i = 0 ; i < 10 ; i++){
+      path.push(i);
+      path.push(0.);
+      path.push(0.);
+    }
+
     vertices = [];
     for(var i = 0 ; i < 10 ; i++){
       vertices.push(i);
@@ -67,11 +74,16 @@ var scene1 = (function (){
       vertices.push(0.);
     }
 
-    console.log(vertices);
+    console.log("original path", path);
+    var secondPath = GeometryGenerator.extrudePath(path,function(elem, index){ return index % 3 == 1 ? elem + 1 : elem  }, function(){});
+    console.log("secondPath",secondPath);
+    var allPaths = path.concat(secondPath);
 
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+    console.log("allPaths", allPaths);
+
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(allPaths), gl.STATIC_DRAW);
     worldVertexPositionBuffer.itemSize = 3;
-    worldVertexPositionBuffer.numItems = vertices.length + 1;
+    worldVertexPositionBuffer.numItems = allPaths.length + 1;
 
     worldVertexColorBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, worldVertexColorBuffer);
@@ -96,13 +108,13 @@ var scene1 = (function (){
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, worldVertexIndexBuffer);
     var worldVertexIndices = [];
 
-    for(var i = 0;i < 18; i+=2){
+    for(var i = 0;i < 10-1; i++){
       worldVertexIndices.push(i);
       worldVertexIndices.push(i+1.);
-      worldVertexIndices.push(i+2.);
-      worldVertexIndices.push(i+2.);
-      worldVertexIndices.push(i+1.);
-      worldVertexIndices.push(i+3.);
+      worldVertexIndices.push(i+10);
+      worldVertexIndices.push(i+1);
+      worldVertexIndices.push(i+10);
+      worldVertexIndices.push(i+11);
     }
 
     console.log(worldVertexIndices);
