@@ -63,11 +63,14 @@ var scene1 = (function (){
       path.push(0.);
     }
 
+    var res = GeometryGenerator.initVerticeAndIndiceBuffer();
+
+    GeometryGenerator.pushToVerticeAndIndiceBuffer(res, path, false);
 
     console.log("original path", path);
     var secondPath = GeometryGenerator.extrudePath(path,function(elem, index){ return index % 3 == 1 ? elem + 1 : elem  }, function(){});
     console.log("secondPath",secondPath);
-    var res = GeometryGenerator.generateVerticeAndIndiceBuffer([path,secondPath]);
+    GeometryGenerator.pushToVerticeAndIndiceBuffer(res, secondPath);
 
     worldVertexPositionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, worldVertexPositionBuffer);
