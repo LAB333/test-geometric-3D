@@ -15,17 +15,14 @@ function initGL(canvas) {
 function loader(){
   var overlay = document.createElement('div');
   overlay.id = 'overlay';
-  var outerrim = document.createElement('div');
-  outerrim.id = "outerrim";
-  var innerrim = document.createElement('div');
-  innerrim.id = "innerrim";
-  outerrim.appendChild(innerrim);
-  overlay.appendChild(outerrim);
+  var loader = document.createElement('div');
+  loader.id = "loader";
+  overlay.appendChild(loader);
   document.querySelector('body').appendChild(overlay);
   var checkLoadState = setInterval(loadingState,16);
   function loadingState(){
     var LS = getLoadingState();
-    document.getElementById('outerrim').style.background = "linear-gradient(to bottom, white "+(LS*100)+"%, black "+(LS*100)+"%)";
+    document.getElementById('loader').style.background = "linear-gradient(to right, white "+(LS*100)+"%, black "+(LS*100)+"%)";
     console.log(LS);
     if(LS >= 1){
       clearInterval(checkLoadState);
