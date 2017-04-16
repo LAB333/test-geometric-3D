@@ -117,6 +117,12 @@ var scenes = [
   {
     duration : 10000,
     state : "notLoaded",
+    sceneName : "tube2",
+    sceneObj : null
+  },
+  {
+    duration : 10000,
+    state : "notLoaded",
     sceneName : "scene1",
     sceneObj : null
   },
