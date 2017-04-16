@@ -25,10 +25,12 @@ function loader(){
   var checkLoadState = setInterval(loadingState,100);
   function loadingState(){
     var LS = getLoadingState();
+    document.getElementById('outerrim').style.background = "linear-gradient(to bottom, white "+(LS*100)+"%, black "+(LS*100)+"%)";
+    console.log(LS);
     if(LS >= 1){
       clearInterval(checkLoadState);
-      //document.querySelector('canvas').style.display = "block";
-      //start();
+      document.querySelector('canvas').style.display = "block";
+      start();
     }
   }
 }
