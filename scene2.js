@@ -13,7 +13,7 @@ var scene2 = (function (){
       useProgram(shaderProgram);
       initAttributesAndUniforms(shaderProgram, ["VertexPosition","VertexColor"], ["PMatrix","MVMatrix"]);
       initBuffers();
-      callback();
+      setTimeout(callback,500 + Math.rand()*500);
     }
 
     //load requiered stuff
