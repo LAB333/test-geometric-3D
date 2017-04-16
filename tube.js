@@ -90,12 +90,6 @@ var tube = (function (){
         [1.0, 0.0, 0.0, 1.0]
     ];
     var unpackedColors = [];
-    /*for (var i in colors) {
-        var color = colors[i];
-        for (var j=0; j < 4; j++) {
-            unpackedColors = unpackedColors.concat(color);
-        }
-    }*/
     for(var i = 0; i < 80; i++){
       /*switch(i%4){
         case 0:
