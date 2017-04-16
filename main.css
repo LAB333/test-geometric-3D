@@ -150,7 +150,7 @@ canvas {
 #outerrim {
   border-radius: 100%;
   border: 1px solid white;
-  background: linear-gradient(to bottom, white 50%, black 50%);
+  background: linear-gradient(to bottom, white 0%, black 0%);
   margin: calc((100% - 50vh) / 4) auto;
   height: 50vh;
   width: 50vh; }
