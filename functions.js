@@ -22,16 +22,18 @@ function loader(){
   outerrim.appendChild(innerrim);
   overlay.appendChild(outerrim);
   document.querySelector('body').appendChild(overlay);
-  var checkLoadState = setInterval(loadingState,100);
+  var checkLoadState = setInterval(loadingState,16);
   function loadingState(){
     var LS = getLoadingState();
     document.getElementById('outerrim').style.background = "linear-gradient(to bottom, white "+(LS*100)+"%, black "+(LS*100)+"%)";
     console.log(LS);
     if(LS >= 1){
       clearInterval(checkLoadState);
-      document.querySelector('canvas').style.display = "block";
-      overlay.parentNode.removeChild(overlay);
-      start();
+      setTimeout(function(){
+        document.querySelector('canvas').style.display = "block";
+        overlay.parentNode.removeChild(overlay);
+        start();
+      }, 500);
     }
   }
 }
