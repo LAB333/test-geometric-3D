@@ -98,13 +98,13 @@ function degToRad(degrees) {
 
 var scenes = [
   {
-    duration : 10000,
+    duration : 1000,
     state : "notLoaded",
     sceneName : "scene1",
     sceneObj : null
   },
   {
-    duration : 10000,
+    duration : 1000,
     state : "notLoaded",
     sceneName : "scene2",
     sceneObj : null
@@ -141,7 +141,12 @@ function startNextScene(){
   currentScene = currentScene != null ? currentScene + 1 : 0;
   console.log("currentScene", currentScene);
   console.log(scenes[currentScene]);
-  scenes[currentScene].sceneObj.start();
+  if(currentScene >= scenes.length){
+    //TODO stop gracefully the demo
+  }else{
+    scenes[currentScene].sceneObj.start();
+    tick();
+  }
 }
 
 
@@ -157,17 +162,14 @@ function animate() {
 
 function tick() {
   timeNow = new Date().getTime();
-  
-  if(lastTime - startSceneTime > scenes[currentScene].duration){
-    startNextScene();
+  if(scenes[currentScene]){
+    if(lastTime - startSceneTime > scenes[currentScene].duration){
+      startNextScene();
+    }else{
+      requestAnimFrame(tick);
+      animate();
+    } 
   }
-  if(currentScene > scenes.length){
-    //TODO stop gracefully the demo
-  }else{
-    requestAnimFrame(tick);
-    animate();
-  }
-  
   
   lastTime = timeNow;
 }
