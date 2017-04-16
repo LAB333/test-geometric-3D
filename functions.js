@@ -30,6 +30,7 @@ function loader(){
     if(LS >= 1){
       clearInterval(checkLoadState);
       document.querySelector('canvas').style.display = "block";
+      overlay.parentNode.removeChild(overlay);
       start();
     }
   }
