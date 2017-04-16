@@ -1,5 +1,5 @@
-var scene1 = (function (){
-  console.log("scene 1 loaded");
+var tube = (function (){
+  console.log("tube loaded");
 
   var vs = null;
   var fs = null;
@@ -17,12 +17,12 @@ var scene1 = (function (){
     }
 
     //load required stuff
-    loadShader("scene1.vs", function(shader){   vs = shader ; 
+    loadShader("tube.vs", function(shader){   vs = shader ; 
                                                 if(vs && fs){ 
                                                   init2();
                                             }
                                             });
-    loadShader("scene1.fs", function(shader){   fs = shader ; 
+    loadShader("tube.fs", function(shader){   fs = shader ; 
                                                 if(vs && fs){ 
                                                   init2();
                                               }
