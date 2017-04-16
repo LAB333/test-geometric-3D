@@ -90,17 +90,17 @@ function useProgram(shaderProgram){
 
 function initAttributesAndUniforms(shaderProgram, attributesNames, uniformsNames){
   for(i = 0, k = attributesNames.length ; i < k ; i++){
-    shaderProgram[attributesNames[i]+'Attribute'] = gl.getAttribLocation(shaderProgram, "a"+attributesNames[i]);
-    gl.enableVertexAttribArray(shaderProgram[attributesNames[i]+'Attribute']);
+    shaderProgram[attributesNames[i]] = gl.getAttribLocation(shaderProgram, attributesNames[i]);
+    gl.enableVertexAttribArray(shaderProgram[attributesNames[i]]);
   }
   for(i = 0, k = uniformsNames.length ; i < k ; i++){
-    shaderProgram[uniformsNames[i]+'Uniform'] = gl.getUniformLocation(shaderProgram, "u"+uniformsNames[i]);
+    shaderProgram[uniformsNames[i]] = gl.getUniformLocation(shaderProgram, uniformsNames[i]);
   }
 }
 
-function setMatrixUniforms(shaderProgram, pMatrix, mvMatrix) {
-  gl.uniformMatrix4fv(shaderProgram.PMatrixUniform, false, pMatrix);
-  gl.uniformMatrix4fv(shaderProgram.MVMatrixUniform, false, mvMatrix);
+function setMatrixUniforms(shaderProgram, uPMatrix, uMVMatrix) {
+  gl.uniformMatrix4fv(shaderProgram.uPMatrix, false, uPMatrix);
+  gl.uniformMatrix4fv(shaderProgram.uMVMatrix, false, uMVMatrix);
 }
 
 function degToRad(degrees) {
