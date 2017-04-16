@@ -71,7 +71,9 @@ var tube2 = (function (){
     console.log("secondPath",thirdPath);
     var fourthPath = GeometryGenerator.extrudePath(path,function(elem, index){ return index % 3 == 1 ? elem - 1 : elem  }, function(){});
     console.log("secondPath",fourthPath);
-    var res = GeometryGenerator.generateVerticeAndIndiceBuffer([path, secondPath, thirdPath, fourthPath]);
+    var fifthPath = GeometryGenerator.extrudePath(path,function(elem, index){ return index % 3 == 2 ? elem - 1 : elem  }, function(){});
+    console.log("secondPath",fifthPath);
+    var res = GeometryGenerator.generateVerticeAndIndiceBuffer([path, secondPath, thirdPath, fourthPath, fifthPath]);
 
     worldVertexPositionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, worldVertexPositionBuffer);
