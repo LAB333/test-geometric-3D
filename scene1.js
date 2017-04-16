@@ -1,8 +1,8 @@
 var scene1 = (function (){
   console.log("scene 1 loaded");
 
-  var vs= null;
-  var fs= null;
+  var vs = null;
+  var fs = null;
   var shaderProgram = null;
 
   function init(callback){
@@ -16,11 +16,11 @@ var scene1 = (function (){
       setTimeout(callback,500 + Math.random()*500);
     }
 
-    //load requiered stuff
+    //load required stuff
     loadShader("scene1.vs", function(shader){   vs = shader ; 
                                                 if(vs && fs){ 
                                                   init2();
-                                              }
+                                            }
                                             });
     loadShader("scene1.fs", function(shader){   fs = shader ; 
                                                 if(vs && fs){ 
@@ -58,7 +58,7 @@ var scene1 = (function (){
     worldVertexPositionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, worldVertexPositionBuffer);
     vertices = [];
-    for(var i =0;i < 10; i++){
+    for(var i = 0 ; i < 10 ; i++){
       vertices.push(i);
       vertices.push(0.);
       vertices.push(0.);
@@ -71,7 +71,7 @@ var scene1 = (function (){
 
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
     worldVertexPositionBuffer.itemSize = 3;
-    worldVertexPositionBuffer.numItems = 20;
+    worldVertexPositionBuffer.numItems = vertices.length + 1;
 
     worldVertexColorBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, worldVertexColorBuffer);

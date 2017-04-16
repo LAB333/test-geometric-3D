@@ -31,7 +31,6 @@ function loader(){
   function loadingState(){
     var LS = getLoadingState();
     document.getElementById('loader').style.background = "linear-gradient(to right, white "+(LS*100)+"%, black "+(LS*100)+"%)";
-    console.log(LS);
     if(LS >= 1){
       clearInterval(checkLoadState);
       setTimeout(function(){
