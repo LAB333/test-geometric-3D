@@ -15,15 +15,20 @@ function initGL(canvas) {
 function loader(){
   var overlay = document.createElement('div');
   overlay.id = 'overlay';
+  var outerrim = document.createElement('div');
+  outerrim.id = "outerrim";
+  var innerrim = document.createElement('div');
+  innerrim.id = "innerrim";
+  outerrim.appendChild(innerrim);
+  overlay.appendChild(outerrim);
   document.querySelector('body').appendChild(overlay);
   var checkLoadState = setInterval(loadingState,100);
   function loadingState(){
     var LS = getLoadingState();
-    console.log(LS);
-    if(LS <= 1){
+    if(LS >= 1){
       clearInterval(checkLoadState);
-      document.querySelector('canvas').style.display = "block";
-      start();
+      //document.querySelector('canvas').style.display = "block";
+      //start();
     }
   }
 }
