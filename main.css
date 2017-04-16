@@ -147,18 +147,9 @@ canvas {
   height: 100%;
   width: 100%; }
 
-#outerrim {
-  border-radius: 100%;
+#loader {
   border: 1px solid white;
-  background: linear-gradient(to bottom, white 0%, black 0%);
-  margin: calc((100% - 50vh) / 4) auto;
-  height: 50vh;
-  width: 50vh; }
-
-#innerrim {
-  border-radius: 100%;
-  border: 1px solid white;
-  background-color: black;
-  margin: calc((100% - 45vh) / 2) auto;
-  height: 45vh;
-  width: 45vh; }
+  background: linear-gradient(to right, white 0%, black 0%);
+  margin: calc(100vh / 2 - 80px / 2) auto;
+  height: 80px;
+  width: 80%; }

@@ -3,8 +3,7 @@ var gl;
 function initGL(canvas) {
   try {
     gl = canvas.getContext("experimental-webgl");
-    gl.viewportWidth = canvas.width;
-    gl.viewportHeight = canvas.height;
+    computeViewport(gl, canvas);
   } catch (e) {
   }
   if (!gl) {
@@ -12,21 +11,26 @@ function initGL(canvas) {
   }
 }
 
+function computeViewport(gl, canvas){
+  canvas.style.width = document.querySelector('body').clientWidth+'px';
+  canvas.width = document.querySelector('body').clientWidth;
+  gl.viewportWidth = document.querySelector('body').clientWidth;
+  canvas.style.height = document.querySelector('body').clientHeight+'px';
+  canvas.height = document.querySelector('body').clientHeight;
+  gl.viewportHeight = document.querySelector('body').clientHeight;
+}
+
 function loader(){
   var overlay = document.createElement('div');
   overlay.id = 'overlay';
-  var outerrim = document.createElement('div');
-  outerrim.id = "outerrim";
-  var innerrim = document.createElement('div');
-  innerrim.id = "innerrim";
-  outerrim.appendChild(innerrim);
-  overlay.appendChild(outerrim);
+  var loader = document.createElement('div');
+  loader.id = "loader";
+  overlay.appendChild(loader);
   document.querySelector('body').appendChild(overlay);
   var checkLoadState = setInterval(loadingState,16);
   function loadingState(){
     var LS = getLoadingState();
-    document.getElementById('outerrim').style.background = "linear-gradient(to bottom, white "+(LS*100)+"%, black "+(LS*100)+"%)";
-    console.log(LS);
+    document.getElementById('loader').style.background = "linear-gradient(to right, white "+(LS*100)+"%, black "+(LS*100)+"%)";
     if(LS >= 1){
       clearInterval(checkLoadState);
       setTimeout(function(){
@@ -99,22 +103,19 @@ function setMatrixUniforms(shaderProgram, pMatrix, mvMatrix) {
   gl.uniformMatrix4fv(shaderProgram.MVMatrixUniform, false, mvMatrix);
 }
 
-
 function degToRad(degrees) {
   return degrees * Math.PI / 180;
 }
 
-
-
 var scenes = [
   {
-    duration : 100000,
+    duration : 10000,
     state : "notLoaded",
     sceneName : "scene1",
     sceneObj : null
   },
   {
-    duration : 1000,
+    duration : 10000,
     state : "notLoaded",
     sceneName : "scene2",
     sceneObj : null
@@ -143,7 +144,6 @@ function getLoadingState(){
   return  progress;
 }
 
-  
 var lastTime = 0;
 var timeNow = 0;
 var startSceneTime = null;
@@ -162,16 +162,12 @@ function startNextScene(){
   }
 }
 
-
 function animate() {
-    
   var elapsed = timeNow - lastTime;
   var elapsedInScene = timeNow - startSceneTime;
   scenes[currentScene].sceneObj.drawScene();
   scenes[currentScene].sceneObj.animate(elapsed, elapsedInScene);
- 
 }
-
 
 function tick() {
   timeNow = new Date().getTime();
@@ -193,9 +189,7 @@ function start(){
   tick();
 }
 
-
 function webGLStart() {
-  
   var canvas = document.querySelector('canvas');
   initGL(canvas);
   collectSecenes();
