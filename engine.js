@@ -11,6 +11,15 @@ function initGL(canvas) {
   }
 }
 
+var scenes = [
+  {
+    duration : 100000,
+    state : "notLoaded",
+    sceneName : "tube",
+    sceneObj : null
+  }
+];
+
 function computeViewport(gl, canvas){
   canvas.style.width = document.querySelector('body').clientWidth+'px';
   canvas.width = document.querySelector('body').clientWidth;
@@ -106,33 +115,6 @@ function setMatrixUniforms(shaderProgram, uPMatrix, uMVMatrix) {
 function degToRad(degrees) {
   return degrees * Math.PI / 180;
 }
-
-var scenes = [
-  {
-    duration : 10000,
-    state : "notLoaded",
-    sceneName : "tube",
-    sceneObj : null
-  },
-  {
-    duration : 10000,
-    state : "notLoaded",
-    sceneName : "tube2",
-    sceneObj : null
-  },
-  {
-    duration : 10000,
-    state : "notLoaded",
-    sceneName : "scene1",
-    sceneObj : null
-  },
-  {
-    duration : 10000,
-    state : "notLoaded",
-    sceneName : "scene2",
-    sceneObj : null
-  }
-];
 
 function collectSecenes(){
   scenes.map(function(elem){
