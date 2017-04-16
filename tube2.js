@@ -1,5 +1,5 @@
 var tube2 = (function (){
-  console.log("tube2 loaded");
+  console.log("scene 1 loaded");
 
   var vs = null;
   var fs = null;
@@ -55,34 +55,30 @@ var tube2 = (function (){
 
   function initBuffers() {
     
+    
+    path = [];
+    for(var i = 0 ; i < 10 ; i++){
+      path.push(i);
+      path.push(0.);
+      path.push(0.);
+    }
+
+
+    console.log("original path", path);
+    var secondPath = GeometryGenerator.extrudePath(path,function(elem, index){ return index % 3 == 1 ? elem + 1 : elem  }, function(){});
+    console.log("secondPath",secondPath);
+    var thirdPath = GeometryGenerator.extrudePath(path,function(elem, index){ return index % 3 == 2 ? elem + 1 : elem  }, function(){});
+    console.log("secondPath",thirdPath);
+    var fourthPath = GeometryGenerator.extrudePath(path,function(elem, index){ return index % 3 == 1 ? elem - 1 : elem  }, function(){});
+    console.log("secondPath",fourthPath);
+    var res = GeometryGenerator.generateVerticeAndIndiceBuffer([path, secondPath, thirdPath, fourthPath]);
+
     worldVertexPositionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, worldVertexPositionBuffer);
-    vertices = [];
-    for(var iZ = 0 ; iZ < 2 ; iZ++){
-      for(var iX = 0 ; iX < 10 ; iX++){
-        for(var iY = 0 ; iY < 2 ; iY++){
-          vertices.push(iX);
-          vertices.push(iY);
-          vertices.push(iZ);
-        }
-      }
-    }
-
-    for(var iY = 0 ; iY < 2 ; iY++){
-      for(var iX = 0 ; iX < 10 ; iX++){
-        for(var iZ = 0 ; iZ < 2 ; iZ++){
-          vertices.push(iX);
-          vertices.push(iY);
-          vertices.push(iZ);
-        }
-      }
-    }
-
-    console.log(vertices);
-
-    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(res.vertices), gl.STATIC_DRAW);
+    console.log("res.vertices", res.vertices);
     worldVertexPositionBuffer.itemSize = 3;
-    worldVertexPositionBuffer.numItems = 40;
+    worldVertexPositionBuffer.numItems = res.vertices / 3;
 
     worldVertexColorBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, worldVertexColorBuffer);
@@ -90,50 +86,27 @@ var tube2 = (function (){
         [1.0, 0.0, 0.0, 1.0]
     ];
     var unpackedColors = [];
-    for(var i = 0; i < 80; i++){
-      switch(i%4){
-        case 0:
-          unpackedColors = unpackedColors.concat([1.0, 0.0, 0.0, 1.0]);
-          break;
-        case 1:
-          unpackedColors = unpackedColors.concat([0.0, 1.0, 0.0, 1.0]);
-          break;
-        case 2:
-          unpackedColors = unpackedColors.concat([0.0, 0.0, 1.0, 1.0]);
-          break;
-        case 3:
-          unpackedColors = unpackedColors.concat([1.0, 1.0, 1.0, 1.0]);
-          break;
-      }
-      /*if(i<20){unpackedColors = unpackedColors.concat([1.0, 0.0, 0.0, 1.0]);}
-      if(20<=i && i<40){unpackedColors = unpackedColors.concat([0.0, 1.0, 0.0, 1.0]);}
-      if(40<=i && i<60){unpackedColors = unpackedColors.concat([0.0, 0.0, 1.0, 1.0]);}
-      if(60<=i && i<80){unpackedColors = unpackedColors.concat([1.0, 1.0, 1.0, 1.0]);}*/
-    }
+    /*for (var i in colors) {
+        var color = colors[i];
+        for (var j=0; j < 4; j++) {
+            unpackedColors = unpackedColors.concat(color);
+        }
+    }*/
+    for(var i = 0; i< 80; i++)
+      unpackedColors = unpackedColors.concat([1.0, 1.0, 1.0, 1.0]);
 
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(unpackedColors), gl.STATIC_DRAW);
     worldVertexColorBuffer.itemSize = 4;
     worldVertexColorBuffer.numItems = 80;
 
+    
+
     worldVertexIndexBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, worldVertexIndexBuffer);
-    var worldVertexIndices = [];
-    var i = 0;
-    for(var j = 0 ; j < 4 ; j++){
-      for(var l = 0 ; l < 18 ; i+=2, l+=2){
-        worldVertexIndices.push(i);
-        worldVertexIndices.push(i+1.);
-        worldVertexIndices.push(i+2.);
-        worldVertexIndices.push(i+2.);
-        worldVertexIndices.push(i+1.);
-        worldVertexIndices.push(i+3.);
-      }
-    }
-
-    console.log(worldVertexIndices);
-    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(worldVertexIndices), gl.STATIC_DRAW);
+    gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(res.indices), gl.STATIC_DRAW);
     worldVertexIndexBuffer.itemSize = 1;
     worldVertexIndexBuffer.numItems = 216;
+    console.log("res.indices",res.indices);
   }
 
 
