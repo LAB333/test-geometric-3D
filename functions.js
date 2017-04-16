@@ -98,7 +98,7 @@ function degToRad(degrees) {
 
 var scenes = [
   {
-    duration : 1000,
+    duration : 100000,
     state : "notLoaded",
     sceneName : "scene1",
     sceneObj : null
