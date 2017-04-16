@@ -104,22 +104,19 @@ function setMatrixUniforms(shaderProgram, pMatrix, mvMatrix) {
   gl.uniformMatrix4fv(shaderProgram.MVMatrixUniform, false, mvMatrix);
 }
 
-
 function degToRad(degrees) {
   return degrees * Math.PI / 180;
 }
 
-
-
 var scenes = [
   {
-    duration : 100000,
+    duration : 10000,
     state : "notLoaded",
     sceneName : "scene1",
     sceneObj : null
   },
   {
-    duration : 1000,
+    duration : 10000,
     state : "notLoaded",
     sceneName : "scene2",
     sceneObj : null
@@ -145,7 +142,6 @@ function getLoadingState(){
   return scenes.filter(function(elem){return elem.state == "ready"}).length / scenes.length;
 }
 
-  
 var lastTime = 0;
 var timeNow = 0;
 var startSceneTime = null;
@@ -164,16 +160,12 @@ function startNextScene(){
   }
 }
 
-
 function animate() {
-    
   var elapsed = timeNow - lastTime;
   var elapsedInScene = timeNow - startSceneTime;
   scenes[currentScene].sceneObj.drawScene();
   scenes[currentScene].sceneObj.animate(elapsed, elapsedInScene);
- 
 }
-
 
 function tick() {
   timeNow = new Date().getTime();
@@ -195,9 +187,7 @@ function start(){
   tick();
 }
 
-
 function webGLStart() {
-  
   var canvas = document.querySelector('canvas');
   initGL(canvas);
   collectSecenes();
