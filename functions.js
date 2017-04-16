@@ -134,7 +134,9 @@ function collectSecenes(){
 } 
 
 function getLoadingState(){
-  return scenes.filter(function(elem){return elem.state == "ready"}).length / scenes.length;
+  return (
+      (scenes.filter(function(elem){return elem.state == "ready"}).length / scenes.length) *0.5
+      + (scenes.filter(function(elem){return elem.state == "loaded"}).length / scenes.length) *0.5;
 }
 
   
