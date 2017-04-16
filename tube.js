@@ -58,20 +58,31 @@ var tube = (function (){
     worldVertexPositionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, worldVertexPositionBuffer);
     vertices = [];
-    for(var i = 0 ; i < 10 ; i++){
-      vertices.push(i);
-      vertices.push(0.);
-      vertices.push(0.);
-      vertices.push(i);
-      vertices.push(1.);
-      vertices.push(0.);
+    for(var iZ = 0 ; iZ < 2 ; iZ++){
+      for(var iX = 0 ; iX < 10 ; iX++){
+        for(var iY = 0 ; iY < 2 ; iY++){
+          vertices.push(iX);
+          vertices.push(iY);
+          vertices.push(iZ);
+        }
+      }
+    }
+
+    for(var iY = 0 ; iY < 2 ; iY++){
+      for(var iX = 0 ; iX < 10 ; iX++){
+        for(var iZ = 0 ; iZ < 2 ; iZ++){
+          vertices.push(iX);
+          vertices.push(iY);
+          vertices.push(iZ);
+        }
+      }
     }
 
     console.log(vertices);
 
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(vertices), gl.STATIC_DRAW);
     worldVertexPositionBuffer.itemSize = 3;
-    worldVertexPositionBuffer.numItems = vertices.length + 1;
+    worldVertexPositionBuffer.numItems = 40;
 
     worldVertexColorBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, worldVertexColorBuffer);
@@ -85,30 +96,32 @@ var tube = (function (){
             unpackedColors = unpackedColors.concat(color);
         }
     }*/
-    for(var i = 0; i< 20; i++)
+    for(var i = 0; i< 80; i++)
       unpackedColors = unpackedColors.concat([1.0, 1.0, 1.0, 1.0]);
 
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(unpackedColors), gl.STATIC_DRAW);
     worldVertexColorBuffer.itemSize = 4;
-    worldVertexColorBuffer.numItems = 20;
+    worldVertexColorBuffer.numItems = 80;
 
     worldVertexIndexBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, worldVertexIndexBuffer);
     var worldVertexIndices = [];
-
-    for(var i = 0;i < 18; i+=2){
-      worldVertexIndices.push(i);
-      worldVertexIndices.push(i+1.);
-      worldVertexIndices.push(i+2.);
-      worldVertexIndices.push(i+2.);
-      worldVertexIndices.push(i+1.);
-      worldVertexIndices.push(i+3.);
+    var i = 0;
+    for(var j = 0 ; j < 4 ; j++){
+      for(var l = 0 ; l < 18 ; i+=2, l+=2){
+        worldVertexIndices.push(i);
+        worldVertexIndices.push(i+1.);
+        worldVertexIndices.push(i+2.);
+        worldVertexIndices.push(i+2.);
+        worldVertexIndices.push(i+1.);
+        worldVertexIndices.push(i+3.);
+      }
     }
 
     console.log(worldVertexIndices);
     gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(worldVertexIndices), gl.STATIC_DRAW);
     worldVertexIndexBuffer.itemSize = 1;
-    worldVertexIndexBuffer.numItems = 54;
+    worldVertexIndexBuffer.numItems = 216;
   }
 
 
