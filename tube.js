@@ -96,8 +96,26 @@ var tube = (function (){
             unpackedColors = unpackedColors.concat(color);
         }
     }*/
-    for(var i = 0; i< 80; i++)
-      unpackedColors = unpackedColors.concat([1.0, 1.0, 1.0, 1.0]);
+    for(var i = 0; i < 80; i++){
+      /*switch(i%4){
+        case 0:
+          unpackedColors = unpackedColors.concat([1.0, 0.0, 0.0, 1.0]);
+          break;
+        case 1:
+          unpackedColors = unpackedColors.concat([0.0, 1.0, 0.0, 1.0]);
+          break;
+        case 2:
+          unpackedColors = unpackedColors.concat([0.0, 0.0, 1.0, 1.0]);
+          break;
+        case 3:
+          unpackedColors = unpackedColors.concat([1.0, 1.0, 1.0, 1.0]);
+          break;
+      }*/
+      if(i<20){unpackedColors = unpackedColors.concat([1.0, 0.0, 0.0, 1.0]);}
+      if(20<=i && i<40){unpackedColors = unpackedColors.concat([0.0, 1.0, 0.0, 1.0]);}
+      if(40<=i && i<60){unpackedColors = unpackedColors.concat([0.0, 0.0, 1.0, 1.0]);}
+      if(60<=i && i<80){unpackedColors = unpackedColors.concat([1.0, 1.0, 1.0, 1.0]);}
+    }
 
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(unpackedColors), gl.STATIC_DRAW);
     worldVertexColorBuffer.itemSize = 4;
