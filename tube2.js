@@ -67,11 +67,11 @@ var tube2 = (function (){
     console.log("original path", path);
     var secondPath = GeometryGenerator.extrudePath(path,function(elem, index){ return index % 3 == 1 ? elem + 1 : elem  }, function(){});
     console.log("secondPath",secondPath);
-    var thirdPath = GeometryGenerator.extrudePath(path,function(elem, index){ return index % 3 == 2 ? elem + 1 : elem  }, function(){});
+    var thirdPath = GeometryGenerator.extrudePath(secondPath,function(elem, index){ return index % 3 == 2 ? elem + 1 : elem  }, function(){});
     console.log("secondPath",thirdPath);
-    var fourthPath = GeometryGenerator.extrudePath(path,function(elem, index){ return index % 3 == 1 ? elem - 1 : elem  }, function(){});
+    var fourthPath = GeometryGenerator.extrudePath(thirdPath,function(elem, index){ return index % 3 == 1 ? elem - 1 : elem  }, function(){});
     console.log("secondPath",fourthPath);
-    var fifthPath = GeometryGenerator.extrudePath(path,function(elem, index){ return index % 3 == 2 ? elem - 1 : elem  }, function(){});
+    var fifthPath = GeometryGenerator.extrudePath(fourthPath,function(elem, index){ return index % 3 == 2 ? elem - 1 : elem  }, function(){});
     console.log("secondPath",fifthPath);
     var res = GeometryGenerator.generateVerticeAndIndiceBuffer([path, secondPath, thirdPath, fourthPath, fifthPath]);
 
@@ -95,7 +95,20 @@ var tube2 = (function (){
         }
     }*/
     for(var i = 0; i< 80; i++)
-      unpackedColors = unpackedColors.concat([1.0, 1.0, 1.0, 1.0]);
+      switch(i%4){
+        case 0:
+          unpackedColors = unpackedColors.concat([1.0, 0.0, 0.0, 1.0]);
+          break;
+        case 1:
+          unpackedColors = unpackedColors.concat([0.0, 1.0, 0.0, 1.0]);
+          break;
+        case 2:
+          unpackedColors = unpackedColors.concat([0.0, 0.0, 1.0, 1.0]);
+          break;
+        case 3:
+          unpackedColors = unpackedColors.concat([1.0, 1.0, 1.0, 1.0]);
+          break;
+      }
 
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(unpackedColors), gl.STATIC_DRAW);
     worldVertexColorBuffer.itemSize = 4;
