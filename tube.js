@@ -56,12 +56,12 @@ var tube = (function (){
   function initBuffers() {
     
     
-    path = [];
-    for(var i = 0 ; i < 10 ; i++){
-      path.push(i);
-      path.push(0.);
-      path.push(0.);
-    }
+    path = [
+      0., 0., 0.,
+      1., 0., 0.,
+      1., -1., 0.,
+      -1., -1., 0.,
+    ];
 
     var res = GeometryGenerator.initVerticeAndIndiceBuffer();
 
@@ -69,21 +69,11 @@ var tube = (function (){
 
     console.log("original path", path);
 
-    var secondPath = GeometryGenerator.extrudePath(path,function(elem, index){ return index % 3 == 1 ? elem + 1 : elem  }, function(){});
-    console.log("secondPath",secondPath);
-    GeometryGenerator.pushToVerticeAndIndiceBuffer(res, secondPath);
-
-    var thirdPath = GeometryGenerator.extrudePath(secondPath,function(elem, index){ return index % 3 == 2 ? elem + 1 : elem  }, function(){});
-    console.log("thirdPath",thirdPath);
-    GeometryGenerator.pushToVerticeAndIndiceBuffer(res, thirdPath);
-
-    var fourthPath = GeometryGenerator.extrudePath(thirdPath,function(elem, index){ return index % 3 == 1 ? elem - 1 : elem  }, function(){});
-    console.log("fourthPath",fourthPath);
-    GeometryGenerator.pushToVerticeAndIndiceBuffer(res, fourthPath);
-
-    var fifthPath = GeometryGenerator.extrudePath(fourthPath,function(elem, index){ return index % 3 == 2 ? elem - 1 : elem  }, function(){});
-    console.log("fifthPath",fifthPath);
-    GeometryGenerator.pushToVerticeAndIndiceBuffer(res, fifthPath);
+    for(var z = 0 ; z < 9 ; z++){
+      path = GeometryGenerator.extrudePath(path,function(elem, index){ return index % 3 == 2 ? elem + 1 : elem  }, function(){});
+      console.log("EXTRUDATE", path);
+      GeometryGenerator.pushToVerticeAndIndiceBuffer(res, path);
+    }
 
     worldVertexPositionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, worldVertexPositionBuffer);
@@ -125,7 +115,7 @@ var tube = (function (){
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, worldVertexIndexBuffer);
     gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(res.indices), gl.STATIC_DRAW);
     worldVertexIndexBuffer.itemSize = 1;
-    worldVertexIndexBuffer.numItems = 216;
+    worldVertexIndexBuffer.numItems = res.vertices / 3;
     console.log("res.indices",res.indices);
   }
 
@@ -152,7 +142,7 @@ var tube = (function (){
     mvPushMatrix();
     //mat4.rotate(uMVMatrix, degToRad(rPyramid), [0, 1, 0]);
 
-    mat4.rotate(uMVMatrix, degToRad(rCube), [1, 0, 0]);
+    mat4.rotate(uMVMatrix, degToRad(rCube), [0, 0, 1]);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, worldVertexPositionBuffer);
     gl.vertexAttribPointer(shaderProgram.aVertexPosition, worldVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
