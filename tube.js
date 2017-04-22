@@ -71,7 +71,6 @@ var tube = (function (){
 
     for(var z = 0 ; z < 9 ; z++){
       path = GeometryGenerator.extrudePath(path,function(elem, index){ return index % 3 == 2 ? elem + 1 : elem  }, function(){});
-      console.log("EXTRUDATE", path);
       GeometryGenerator.pushToVerticeAndIndiceBuffer(res, path);
     }
 
