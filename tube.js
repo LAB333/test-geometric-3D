@@ -58,9 +58,8 @@ var tube = (function (){
     
     path = [];
     for(var i = 0 ; i < 10 ; i++){
-      path.push(i);
-      path.push(0.);
-      path.push(0.);
+      var vertex = {x : i, y : 0, z : 0};
+      path.push(vertex);
     }
 
     var res = GeometryGenerator.initVerticeAndIndiceBuffer();
@@ -69,19 +68,19 @@ var tube = (function (){
 
     console.log("original path", path);
 
-    var secondPath = GeometryGenerator.extrudePath(path,function(elem, index){ return index % 3 == 1 ? elem + 1 : elem  }, function(){});
+    var secondPath = GeometryGenerator.extrudePath(path,function(elem, index){ return {x:elem.x, y:elem.y+1, z:elem.z };}, function(){});
     console.log("secondPath",secondPath);
     GeometryGenerator.pushToVerticeAndIndiceBuffer(res, secondPath);
 
-    var thirdPath = GeometryGenerator.extrudePath(secondPath,function(elem, index){ return index % 3 == 2 ? elem + 1 : elem  }, function(){});
+    var thirdPath = GeometryGenerator.extrudePath(secondPath,function(elem, index){ return {x:elem.x, y:elem.y, z:elem.z+1 };}, function(){});
     console.log("thirdPath",thirdPath);
     GeometryGenerator.pushToVerticeAndIndiceBuffer(res, thirdPath);
 
-    var fourthPath = GeometryGenerator.extrudePath(thirdPath,function(elem, index){ return index % 3 == 1 ? elem - 1 : elem  }, function(){});
+    var fourthPath = GeometryGenerator.extrudePath(thirdPath,function(elem, index){ return {x:elem.x, y:elem.y-1, z:elem.z };}, function(){});
     console.log("fourthPath",fourthPath);
     GeometryGenerator.pushToVerticeAndIndiceBuffer(res, fourthPath);
 
-    var fifthPath = GeometryGenerator.extrudePath(fourthPath,function(elem, index){ return index % 3 == 2 ? elem - 1 : elem  }, function(){});
+    var fifthPath = GeometryGenerator.extrudePath(fourthPath,function(elem, index){ return {x:elem.x, y:elem.y, z:elem.z-1 };} , function(){});
     console.log("fifthPath",fifthPath);
     GeometryGenerator.pushToVerticeAndIndiceBuffer(res, fifthPath);
 
@@ -90,7 +89,7 @@ var tube = (function (){
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(res.vertices), gl.STATIC_DRAW);
     console.log("res.vertices", res.vertices);
     worldVertexPositionBuffer.itemSize = 3;
-    worldVertexPositionBuffer.numItems = res.vertices / 3;
+    worldVertexPositionBuffer.numItems = res.vertices.length /3 ;
 
     worldVertexColorBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, worldVertexColorBuffer);
@@ -98,7 +97,7 @@ var tube = (function (){
         [1.0, 0.0, 0.0, 1.0]
     ];
     var unpackedColors = [];
-    for(var i = 0; i< 80; i++){
+    for(var i = 0; i< res.vertices.length/3; i++){
       switch(i%4){
         case 0:
           unpackedColors = unpackedColors.concat([1.0, 0.0, 0.0, 1.0]);
@@ -115,9 +114,11 @@ var tube = (function (){
       }
     }
 
+    console.log("unpackedColors",unpackedColors);
+
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(unpackedColors), gl.STATIC_DRAW);
     worldVertexColorBuffer.itemSize = 4;
-    worldVertexColorBuffer.numItems = 80;
+    worldVertexColorBuffer.numItems = res.vertices.length /3;
 
     
 
@@ -125,7 +126,7 @@ var tube = (function (){
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER, worldVertexIndexBuffer);
     gl.bufferData(gl.ELEMENT_ARRAY_BUFFER, new Uint16Array(res.indices), gl.STATIC_DRAW);
     worldVertexIndexBuffer.itemSize = 1;
-    worldVertexIndexBuffer.numItems = 216;
+    worldVertexIndexBuffer.numItems = res.indices.length;
     console.log("res.indices",res.indices);
   }
 

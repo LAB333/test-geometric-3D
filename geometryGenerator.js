@@ -62,18 +62,20 @@ GeometryGenerator = (function(){
       var startIndex = res.vertices.length;
 
       //concat the current path to the list of vertices
-      res.vertices = res.vertices.concat(path);
+      path.forEach(function(elem,index){
+        res.vertices = res.vertices.concat([elem.x, elem.y, elem.z])
+      })
 
       //if should make links, Map the path to the previsously srored one, uneless first
       if(shouldMakeLinks){
         console.log("making links, length of a path = ", path.length);
-        for(var j = 0;j < (path.length/3)-1; j++){
+        for(var j = 0;j < path.length -1; j++){
           res.indices.push(startIndex/3 + j + 0);
           res.indices.push(startIndex/3 + j + 1 );
-          res.indices.push(startIndex/3 + j + 0 - path.length/3);
+          res.indices.push(startIndex/3 + j + 0 - path.length);
           res.indices.push(startIndex/3 + j + 1 );
-          res.indices.push(startIndex/3 + j + 0 - path.length/3);
-          res.indices.push(startIndex/3 + j + 1 - path.length/3);
+          res.indices.push(startIndex/3 + j + 0 - path.length);
+          res.indices.push(startIndex/3 + j + 1 - path.length);
         }
       }
 
