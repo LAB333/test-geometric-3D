@@ -56,33 +56,25 @@ var tube = (function (){
   function initBuffers() {
     
     
-    path = [];
-    for(var i = 0 ; i < 10 ; i++){
-      var vertex = {x : i, y : 0, z : 0};
-      path.push(vertex);
-    }
+    path = [
+      {x: 0, y: 0, z: 0},
+      {x: 1, y: 0, z: 0},
+      {x: 1, y: -1, z: 0},
+      {x: 0, y: -1, z: 0},
+
+      {x: 0, y: 0, z: 0}
+    ];
 
     var res = GeometryGenerator.initVerticeAndIndiceBuffer();
 
     GeometryGenerator.pushToVerticeAndIndiceBuffer(res, path, false);
-
     console.log("original path", path);
 
-    var secondPath = GeometryGenerator.extrudePath(path,function(elem, index){ return {x:elem.x, y:elem.y+1, z:elem.z };}, function(){});
-    console.log("secondPath",secondPath);
-    GeometryGenerator.pushToVerticeAndIndiceBuffer(res, secondPath);
-
-    var thirdPath = GeometryGenerator.extrudePath(secondPath,function(elem, index){ return {x:elem.x, y:elem.y, z:elem.z+1 };}, function(){});
-    console.log("thirdPath",thirdPath);
-    GeometryGenerator.pushToVerticeAndIndiceBuffer(res, thirdPath);
-
-    var fourthPath = GeometryGenerator.extrudePath(thirdPath,function(elem, index){ return {x:elem.x, y:elem.y-1, z:elem.z };}, function(){});
-    console.log("fourthPath",fourthPath);
-    GeometryGenerator.pushToVerticeAndIndiceBuffer(res, fourthPath);
-
-    var fifthPath = GeometryGenerator.extrudePath(fourthPath,function(elem, index){ return {x:elem.x, y:elem.y, z:elem.z-1 };} , function(){});
-    console.log("fifthPath",fifthPath);
-    GeometryGenerator.pushToVerticeAndIndiceBuffer(res, fifthPath);
+    for(var z = 0 ; z < 1 ; z++){
+      path = GeometryGenerator.extrudePath(path,function(elem, index){ return {x:elem.x, y:elem.y, z:elem.z+1 };}, function(){});
+      console.log("path "+(z+2), path);
+      GeometryGenerator.pushToVerticeAndIndiceBuffer(res, path);
+    }
 
     worldVertexPositionBuffer = gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER, worldVertexPositionBuffer);
@@ -148,12 +140,12 @@ var tube = (function (){
 
     mat4.identity(uMVMatrix);
 
-    mat4.translate(uMVMatrix, [0.0, 0.0, -8.0]);
+    mat4.translate(uMVMatrix, [-0.5, 0.5, -4.0]);
 
     mvPushMatrix();
     //mat4.rotate(uMVMatrix, degToRad(rPyramid), [0, 1, 0]);
 
-    mat4.rotate(uMVMatrix, degToRad(rCube), [1, 0, 0]);
+    mat4.rotate(uMVMatrix, degToRad(rCube), [-1, 1, 0]);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, worldVertexPositionBuffer);
     gl.vertexAttribPointer(shaderProgram.aVertexPosition, worldVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
