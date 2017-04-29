@@ -111,7 +111,9 @@ var tube = (function (){
   }
 
 
-  var rCube = 0;
+  var rCubeX = 0;
+  var rCubeY = 0;
+  var rCubeZ = 0;
 
   function drawScene() {
 
@@ -133,7 +135,9 @@ var tube = (function (){
     mvPushMatrix();
     //mat4.rotate(uMVMatrix, degToRad(rPyramid), [0, 1, 0]);
 
-    mat4.rotate(uMVMatrix, degToRad(rCube), [-1, 1, 0]);
+    mat4.rotate(uMVMatrix, degToRad(rCubeX), [1,0,0]);
+    mat4.rotate(uMVMatrix, degToRad(rCubeY), [0,-1,0]);
+    mat4.rotate(uMVMatrix, degToRad(rCubeZ), [0,0,1]);
 
     gl.bindBuffer(gl.ARRAY_BUFFER, worldVertexPositionBuffer);
     gl.vertexAttribPointer(shaderProgram.aVertexPosition, worldVertexPositionBuffer.itemSize, gl.FLOAT, false, 0, 0);
@@ -151,7 +155,9 @@ var tube = (function (){
 
 
   function animate(elapsed){
-    rCube -= (75 * elapsed) / 1000.0;
+    rCubeX += (75 * elapsed) / 1000.0;
+    rCubeY += (125 * elapsed) / 1000.0;
+    rCubeZ += (75 * elapsed) / 1000.0;
   }
 
   function start(){
