@@ -56,21 +56,21 @@ var tube = (function (){
   function initBuffers() {
     
     
-    path = [
+    path = {
+      vertices : [
       {x: 0, y: 0, z: 0},
       {x: 1, y: 0, z: 0},
       {x: 1, y: -1, z: 0},
-      {x: 0, y: -1, z: 0},
-
-      {x: 0, y: 0, z: 0}
-    ];
+      {x: 0, y: -1, z: 0}],
+      closedLoop : true
+    };
 
     var res = GeometryGenerator.initVerticeAndIndiceBuffer();
 
     GeometryGenerator.pushToVerticeAndIndiceBuffer(res, path, false);
     console.log("original path", path);
 
-    for(var z = 0 ; z < 1 ; z++){
+    for(var z = 0 ; z < 6 ; z++){
       path = GeometryGenerator.extrudePath(path,function(elem, index){ return {x:elem.x, y:elem.y, z:elem.z+1 };}, function(){});
       console.log("path "+(z+2), path);
       GeometryGenerator.pushToVerticeAndIndiceBuffer(res, path);
@@ -90,20 +90,8 @@ var tube = (function (){
     ];
     var unpackedColors = [];
     for(var i = 0; i< res.vertices.length/3; i++){
-      switch(i%4){
-        case 0:
-          unpackedColors = unpackedColors.concat([1.0, 0.0, 0.0, 1.0]);
-          break;
-        case 1:
-          unpackedColors = unpackedColors.concat([0.0, 1.0, 0.0, 1.0]);
-          break;
-        case 2:
-          unpackedColors = unpackedColors.concat([0.0, 0.0, 1.0, 1.0]);
-          break;
-        case 3:
-          unpackedColors = unpackedColors.concat([1.0, 1.0, 1.0, 1.0]);
-          break;
-      }
+      unpackedColors = unpackedColors.concat([Math.random(), Math.random(), Math.random(), 1.0]);
+         
     }
 
     console.log("unpackedColors",unpackedColors);
